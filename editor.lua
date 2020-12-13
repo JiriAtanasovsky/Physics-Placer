@@ -7,7 +7,6 @@
 local filename = "mission01"
 local objects = require ( "missions." .. filename ).physicsData(1)
 
-
 local composer = require( "composer" )
 local scene = composer.newScene()
 
@@ -24,6 +23,13 @@ local metod = "create"
 local selectedObject, selectedJoint
 local jointObjA, jointObjB, jointLine
 
+local jointTypes = { 
+	weld = { "anchor_x", "anchor_y", },
+	pivot = { "anchor_x", "anchor_y", },
+	friction = { "anchor_x", "anchor_y", },
+	rope = { "offsetA_x", "offsetA_y", "offsetB_x", "offsetB_y" },
+	}
+	
 local sliderVal = { 0,0,0,0 }
 
 local ui, uiGroup
@@ -396,14 +402,7 @@ function scene:create( event )
 	
 	--=================================
 	--CREATE BUTTONS FOR JOINTs CREATION
-	--=================================
-	local jointTypes = { 
-		weld = { "anchor_x", "anchor_y", },
-		pivot = { "anchor_x", "anchor_y", },
-		friction = { "anchor_x", "anchor_y", },
-		rope = { "offsetA_x", "offsetA_y", "offsetB_x", "offsetB_y" },
-		}
-	
+	--=================================	
 	function selectJoint ( event )
 		setMetod ( "joint" )
 		
