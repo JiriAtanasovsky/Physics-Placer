@@ -17,7 +17,12 @@ function loader.load ( group, touchListener, filename, offsetX, offsetY )
 		
 		local img
 		if par.name:find ( "polygon" ) then
-			img = display.newPolygon ( group, 0, 0, objects.data[par.name][1].shape )
+			img = display.newGroup ()
+			group:insert ( img )
+			for i = 1, #objects.data[par.name] do
+				local newPolygonParams = util.getBoundingCentroid ( objects.data[par.name][i].shape )
+				img[i] = display.newPolygon ( img, newPolygonParams.centroid.x, newPolygonParams.centroid.y, objects.data[par.name][i].shape )
+			end
 		else
 			img = display.newImageRect ( group, "missions/".. par.name ..".png", par.width, par.height )
 		end

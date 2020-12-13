@@ -51,7 +51,7 @@ function saver.save( mainTable, filename )
 	end
 	
 	local totalWidth = maxX - minX
-	local totalHeight = maxY - minY
+	local totalHeight = maxY - minY	
 	
 	for i = 1, #saveTab.objects do
 		local object = saveTab.objects[i]
@@ -59,8 +59,8 @@ function saver.save( mainTable, filename )
 		object.y = object.y - minY - totalHeight / 2
 	end
 	
-	saveTab.totalWidth = totalWidth
-	saveTab.totalHeight = totalHeight
+	saveTab.totalWidth = #saveTab.objects == 1 and saveTab.objects[1].width or maxX - minX
+	saveTab.totalHeight = #saveTab.objects == 1 and saveTab.objects[1].height or maxY - minY	
 	
 	--save as json
 	util.saveFile ( saveTab, filename )

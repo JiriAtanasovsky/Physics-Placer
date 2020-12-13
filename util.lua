@@ -110,6 +110,8 @@ util.border = {
 }
 
 util.newImage = function (...)
+	--schroederapps
+	--source: https://forums.solar2d.com/t/is-there-a-way-to-use-newimagerect-taking-automatically-the-width-and-height-of-the-1x-image/346684/2
 	local parent = display.currentStage
 	local filename = ''
 	local baseDir = system.ResourceDirectory
@@ -140,6 +142,59 @@ util.newImage = function (...)
 	
 	img = display.newImageRect(parent, filename, baseDir, w, h)
 	return img
+end
+
+function util.getBoundingCentroid( pts )
+	--source: https://gist.github.com/HoraceBury/9431861
+	--[[
+	Calculates the middle of a polygon's bounding box - as if drawing a square around the polygon and finding the middle.
+	Also calculates the width and height of the bounding box.
+	
+	Parameters:
+		Polygon coordinates as a table of points, display group or list of coordinates.
+	
+	Returns:
+		Centroid (centre) x, y
+		Bounding box width, height
+	
+	Notes:
+		Does not centre the polygon. To do this use: math.centrePolygon
+]]--
+
+	local function tableToPoints( tbl )
+	-- converts a table of {x,y,x,y,...} to points {x,y}
+		local pts = {}
+		
+		for i=1, #tbl-1, 2 do
+			pts[#pts+1] = { x=tbl[i], y=tbl[i+1] }
+		end
+		
+		return pts
+	end
+
+	pts = tableToPoints( pts )
+	
+	local xMin, xMax, yMin, yMax = 100000000, -100000000, 100000000, -100000000
+	
+	for i=1, #pts do
+		local pt = pts[i]
+		if (pt.x < xMin) then xMin = pt.x end
+		if (pt.x > xMax) then xMax = pt.x end
+		if (pt.y < yMin) then yMin = pt.y end
+		if (pt.y > yMax) then yMax = pt.y end
+	end
+	
+	local width, height = xMax-xMin, yMax-yMin
+	local cx, cy = xMin+(width/2), yMin+(height/2)
+	
+	local output = {
+		centroid = { x=cx, y=cy },
+		width = width,
+		height = height,
+		bounding = { xMin=xMin, xMax=xMax, yMin=yMin, yMax=yMax },
+	}
+	
+	return output
 end
 
 return util

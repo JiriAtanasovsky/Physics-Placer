@@ -182,6 +182,8 @@ function touchListener ( event )
 			target.bodyType = target.bodyType == "dynamic" and "static" or "dynamic"
 			info ( event.x, event.y, target.bodyType, target.parent )
 		end
+	elseif metod == "pan" then
+		return false
 	end
 
 	return true
@@ -205,7 +207,12 @@ local function runtimeTouchListener ( event )
 			if phase == "ended" then
 				local img
 				if selectedObject:find ( "polygon" ) then
-					img = display.newPolygon ( panGroup, 0, 0, objects.data[selectedObject][1].shape )
+					img = display.newGroup ()
+					panGroup:insert ( img )
+					for i = 1, #objects.data[selectedObject] do
+						local newPolygonParams = util.getBoundingCentroid ( objects.data[selectedObject][i].shape )
+						img[i] = display.newPolygon ( img, newPolygonParams.centroid.x, newPolygonParams.centroid.y, objects.data[selectedObject][i].shape )
+					end
 				else
 					img = util.newImage ( panGroup, "missions/" .. selectedObject .. ".png" )
 				end
