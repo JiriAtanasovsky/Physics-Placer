@@ -57,7 +57,7 @@ function loader.load ( group, touchListener, filename, offsetX, offsetY )
 		end
 	end
 	
-	util.printTable ( mainTable )
+	-- util.printTable ( mainTable )
 	
 	return mainTable
 end

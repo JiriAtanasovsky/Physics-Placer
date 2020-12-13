@@ -562,7 +562,7 @@ function scene:destroy( event )
 	
 	Runtime:removeEventListener( "key", keyListener )
 	Runtime:removeEventListener( "touch", runtimeTouchListener )
-	
+		
 	physics.stop ()
 end
 
@@ -573,6 +573,7 @@ scene:addEventListener( "create", scene )
 scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
 scene:addEventListener( "destroy", scene )
+
 
 -----------------------------------------------------------------------------------------
 

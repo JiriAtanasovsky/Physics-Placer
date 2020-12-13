@@ -33,9 +33,17 @@ function saver.save( mainTable, filename )
 	--optimize x and y to start @ 0,0
 	local minX, minY = 32767, 32767
 	local maxX, maxY = -32768, -32768
+	-- local maxWidth, maxHeight = -32768, -32768
+	local minXBound, minYBound = 32767, 32767
+	local maxXBound, maxYBound = -32768, -32768
 	
 	for i = 1, #saveTab.objects do
 		local X,Y = saveTab.objects[i].x, saveTab.objects[i].y
+		local W,H = saveTab.objects[i].width, saveTab.objects[i].height
+		--bounderies of object
+		local minXB, maxXB = X - W/2, X + W/2
+		local minYB, maxYB = Y - H/2, Y + H/2
+		
 		if X < minX then
 			minX = X
 		end
@@ -48,19 +56,39 @@ function saver.save( mainTable, filename )
 		if Y > maxY then
 			maxY = Y
 		end
+		
+		if minXB < minXBound then
+			minXBound = minXB
+		end
+		if minYB < minYBound then
+			minYBound = minYB
+		end
+		if maxXB > maxXBound then
+			maxXBound = maxXB
+		end
+		if maxYB > maxYBound then
+			maxYBound = maxYB
+		end
+		
+		-- if W > maxWidth then
+			-- maxWidth = W
+		-- end
+		-- if H > maxHeight then
+			-- maxHeight = H
+		-- end
 	end
 	
-	local totalWidth = maxX - minX
-	local totalHeight = maxY - minY	
+	local totalWidth = maxXBound - minXBound
+	local totalHeight = maxYBound - minYBound
 	
 	for i = 1, #saveTab.objects do
 		local object = saveTab.objects[i]
-		object.x = object.x - minX - totalWidth / 2
-		object.y = object.y - minY - totalHeight / 2
+		object.x = object.x - minXBound
+		object.y = object.y - minYBound
 	end
 	
-	saveTab.totalWidth = #saveTab.objects == 1 and saveTab.objects[1].width or maxX - minX
-	saveTab.totalHeight = #saveTab.objects == 1 and saveTab.objects[1].height or maxY - minY	
+	saveTab.totalWidth = totalWidth
+	saveTab.totalHeight = totalHeight
 	
 	--save as json
 	util.saveFile ( saveTab, filename )
