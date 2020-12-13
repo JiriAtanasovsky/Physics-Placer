@@ -3,7 +3,7 @@ local loader = {}
 local util = require "util"
 local physics = require "physics"
 
-function loader.load ( group, touchListener, filename )
+function loader.load ( group, touchListener, filename, offsetX, offsetY )
 	local mainTable = {}
 	mainTable.objects = {}
 	
@@ -14,8 +14,14 @@ function loader.load ( group, touchListener, filename )
 	
 	for i = 1, #objectsPar do
 		local par = objectsPar[i]
-		local img = display.newImageRect ( group, "missions/".. par.name ..".png", par.width, par.height )
-		img.x, img.y = par.x + display.contentCenterX, par.y + display.contentCenterY
+		
+		local img
+		if par.name:find ( "polygon" ) then
+			img = display.newPolygon ( group, 0, 0, objects.data[par.name][1].shape )
+		else
+			img = display.newImageRect ( group, "missions/".. par.name ..".png", par.width, par.height )
+		end
+		img.x, img.y = par.x + ( offsetX or 0 ), par.y + ( offsetY or 0 )
 		
 		img.touch = touchListener
 		
@@ -27,6 +33,7 @@ function loader.load ( group, touchListener, filename )
 		img.jointsParams = par.joints
 		
 		physics.addBody( img, objects:get ( par.name ) )
+		img.bodyType = par.bodyType
 		
 		mainTable.objects[par.id] = img
 	end

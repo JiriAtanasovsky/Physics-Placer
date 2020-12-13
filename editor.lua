@@ -213,7 +213,13 @@ local function runtimeTouchListener ( event )
 	elseif metod == "create" then
 		if selectedObject and objects then
 			if phase == "ended" then
-				local img = util.newImage ( panGroup, "missions/" .. selectedObject .. ".png" )
+				local img
+				if selectedObject:find ( "polygon" ) then
+					img = display.newPolygon ( panGroup, 0, 0, objects.data[selectedObject][1].shape )
+				else
+					img = util.newImage ( panGroup, "missions/" .. selectedObject .. ".png" )
+				end
+				
 				img.x, img.y = math.round ( event.x ), math.round ( event.y )
 				img.name = selectedObject
 				img.joints = {}
