@@ -210,7 +210,7 @@ local function runtimeTouchListener ( event )
 					img = util.newImage ( panGroup, "missions/" .. selectedObject .. ".png" )
 				end
 				
-				img.x, img.y = math.round ( event.x ), math.round ( event.y )
+				img.x, img.y = panGroup:contentToLocal ( math.round ( event.x ), math.round ( event.y ) )
 				img.name = selectedObject
 				img.joints = {}
 				img.jointsParams = {}
@@ -342,8 +342,8 @@ function scene:create( event )
 	})
 	
 	--lines to mark middles
-	local line1 = display.newLine ( panGroup, display.contentCenterX, -200, display.contentCenterX, 2000 )
-	local line2 = display.newLine ( panGroup, -300, display.contentCenterY, 2000, display.contentCenterY )
+	local line1 = display.newLine ( panGroup, display.contentCenterX, -22000, display.contentCenterX, 22000 )
+	local line2 = display.newLine ( panGroup, -22000, display.contentCenterY, 22000, display.contentCenterY )
 	
 	line1.strokeWidth, line2.strokeWidth = 2,2
 	

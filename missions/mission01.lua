@@ -139,6 +139,54 @@ function M.physicsData(scale)
                     
 		}
 		
+		, 
+		["polygon_200x100_4"] = {
+                    
+                    
+                    
+                    
+                    {
+                    pe_fixture_id = "", density = 2, friction = 0, bounce = 0, 
+                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
+                    shape = {   -100, 65  ,  -100, -65  ,  100, -65  ,  100, 66  }
+                    }
+                    
+                    
+                    
+		}
+		
+		, 
+		["polygon_200x100_3D"] = {
+                    
+                    
+                    
+                    
+                    {
+                    pe_fixture_id = "", density = 2, friction = 0, bounce = 0, 
+                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
+                    shape = {   -100, 65  ,  -100, -65  ,  100, 66  }
+                    }
+                    
+                    
+                    
+		}
+		
+		, 
+		["polygon_200x100_3U"] = {
+                    
+                    
+                    
+                    
+                    {
+                    pe_fixture_id = "", density = 2, friction = 0, bounce = 0, 
+                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
+                    shape = {   -100, 65  ,  100, -65  ,  100, 66  }
+                    }
+                    
+                    
+                    
+		}
+		
 	} }
 
         -- apply scale factor
