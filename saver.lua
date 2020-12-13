@@ -84,7 +84,7 @@ function saver.save( mainTable, filename )
 	for i = 1, #saveTab.objects do
 		local object = saveTab.objects[i]
 		object.x = object.x - minXBound
-		object.y = object.y - minYBound
+		object.y = object.y - minYBound - totalHeight
 	end
 	
 	saveTab.totalWidth = totalWidth
