@@ -45,6 +45,7 @@ saves string or table as string or json formated string
 		local json = require "json"
 		toSave = json.encode( toSave )
 		toSave = json.prettify ( toSave )
+		json = nil
 	end
 	
 	if type ( toSave ) == "string" then
@@ -55,17 +56,48 @@ saves string or table as string or json formated string
 		if not file then
 			-- Error occurred; output the cause
 			print( "File error: " .. errorString )
+			return false
 		else
 			-- Write data to file
 			file:write( toSave )
 			-- Close the file handle
 			io.close( file )
 			print ( "File saved." )
+			file = nil
+			return true
 		end
-		file = nil
+		
 	else
 		return false
 	end
+end
+
+function util.loadFile ( filename )
+--[[
+looks for filename in documents folder and tries to convert if from json to lua table
+returns lua table created from json string saved in filename
+]]
+	local jsonString
+	local convertedTable
+	
+	local path = system.pathForFile( filename or "myfile.txt", system.DocumentsDirectory )
+	local file, errorString = io.open( path, "r" )
+	
+	if not file then
+			-- Error occurred; output the cause
+			print( "File error: " .. errorString )
+		else
+			jsonString = file:read ( "*a" )
+			io.close ( file )
+		end
+	
+	if jsonString then
+		local json = require "json"
+		convertedTable = json.decode (jsonString)
+		json = nil
+	end
+	
+	return convertedTable or false
 end
 
 util.border = {

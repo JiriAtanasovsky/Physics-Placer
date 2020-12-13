@@ -280,6 +280,30 @@ function scene:create( event )
 		label = "Save",
 	})
 	
+	local function loadWrap ()
+		-- for i = #mainTable.objects, 1, -1 do
+		for i, v in pairs ( mainTable.objects ) do
+			display.remove ( v )
+			mainTable.objects[i] = nil
+		end
+		mainTable = nil
+		mainTable = loader.load ( panGroup, touchListener, filename..".json" )
+	end
+	
+	ui.save = widget.newButton( {
+		onPress = loadWrap,
+		x = util.border.right - 60,
+		y = util.border.up + 170,
+		shape = "roundedRect",
+		width = 100,
+		height = 100,
+		cornerRadius = 2,
+		fillColor = { default={1,0,0,1}, over={1,0.1,0.7,0.4} },
+		strokeColor = { default={1,0.4,0,1}, over={0.8,0.8,1,1} },
+		strokeWidth = 4,
+		label = "Load",
+	})
+	
 	--lines to mark middles
 	local line1 = display.newLine ( panGroup, display.contentCenterX, -200, display.contentCenterX, 2000 )
 	local line2 = display.newLine ( panGroup, -300, display.contentCenterY, 2000, display.contentCenterY )

@@ -55,17 +55,15 @@ function saver.save( mainTable, filename )
 	
 	for i = 1, #saveTab.objects do
 		local object = saveTab.objects[i]
-		print ( object.x, object.y )
-		object.x = object.x - minX -- totalWidth / 2
-		object.y = object.y - minY -- totalHeight / 2
-		print ( object.x, object.y )
+		object.x = object.x - minX - totalWidth / 2
+		object.y = object.y - minY - totalHeight / 2
 	end
 	
 	saveTab.totalWidth = totalWidth
 	saveTab.totalHeight = totalHeight
 	
 	--save as json
-	util.saveFile ( saveTab, filename .. ".json" )
+	util.saveFile ( saveTab, filename )
 end
 
 return saver
