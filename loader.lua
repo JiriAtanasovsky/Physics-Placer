@@ -42,7 +42,7 @@ function loader.load ( group, touchListener, filename, offsetX, offsetY )
 		for i = 1, #img.jointsParams do
 			local par = img.jointsParams[i]
 			
-			local jointType, jointObjA, jointObjB, A, B, C, D = par.jointType, img, mainTable.objects[par.objBId], 0,0,0,0
+			local jointType, jointObjA, jointObjB, A, B, C, D = par.jointType, img, mainTable.objects[par.objBId], par.slider1,par.slider2,par.slider3,par.slider4
 
 			if jointType == "rope" then
 				newJoint = physics.newJoint ( jointType, jointObjA, jointObjB, A, B, C, D )

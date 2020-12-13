@@ -48,6 +48,11 @@ local function setMetod ( met )
 	metod = met
 	ui.metodText.text = tostring ( metod )
 	
+	if metod == "joint" then
+		ui:showSliders ( true )
+	else
+		ui:showSliders ( false )
+	end
 end
 
 local function keyListener ( event )
@@ -164,24 +169,7 @@ function touchListener ( event )
 				
 				jointObjB = target
 			elseif phase == "ended" and target and jointObjA then
-				display.remove ( jointLine )
-				jointLine = nil
-				jointObjB = target
 				
-				if not ( jointObjA == jointObjB ) then
-					
-					local newJoint
-					
-					if selectedJoint == "rope" then
-						newJoint = physics.newJoint ( selectedJoint, jointObjA, jointObjB, sliderVal[1],sliderVal[2],sliderVal[3],sliderVal[4] )
-					else
-						newJoint = physics.newJoint ( selectedJoint, jointObjA, jointObjB, jointObjA.x + sliderVal[1], jointObjA.y + sliderVal[2], 0,0 )
-					end
-					info ( event.x, event.y, selectedJoint, target.parent )
-					
-					jointObjA.joints[#jointObjA.joints+1] = newJoint
-					jointObjA.jointsParams[#jointObjA.jointsParams+1] = { jointType = selectedJoint, objBId = jointObjB.id}
-				end
 			elseif phase == "cancelled" then
 				print ( "CANCELLED" )
 				display.remove ( jointLine )
@@ -206,8 +194,10 @@ local function runtimeTouchListener ( event )
 	if metod == "pan" then
 		if ( phase == "began" ) then
 			panGroup.originalX = panGroup.x
+			panGroup.originalY = panGroup.y
 		elseif ( phase == "moved" ) then
 			panGroup.x = event.xDelta + panGroup.originalX
+			panGroup.y = event.yDelta + panGroup.originalY
 		end
 		
 	elseif metod == "create" then
@@ -234,6 +224,47 @@ local function runtimeTouchListener ( event )
 		end
 	else
 	
+	end
+end
+
+function createButtonAction ()
+	if metod == "joint" and jointObjA and jointObjB and jointLine then
+	--create new joint
+		display.remove ( jointLine )
+		jointLine = nil
+		if not ( jointObjA == jointObjB ) then
+			
+			local newJoint
+			
+			if selectedJoint == "rope" then
+				newJoint = physics.newJoint ( selectedJoint, jointObjA, jointObjB, sliderVal[1],sliderVal[2],sliderVal[3],sliderVal[4] )
+			else
+				newJoint = physics.newJoint ( selectedJoint, jointObjA, jointObjB, jointObjA.x + sliderVal[1], jointObjA.y + sliderVal[2], 0,0 )
+			end
+			info ( jointObjA.x, jointObjA.y, selectedJoint, jointObjA.parent )
+			
+			jointObjA.joints[#jointObjA.joints+1] = newJoint
+			jointObjA.jointsParams[#jointObjA.jointsParams+1] = { jointType = selectedJoint, objBId = jointObjB.id, slider1 = sliderVal[1], slider2 = sliderVal[2], slider3 = sliderVal[3], slider4 = sliderVal[4] }
+		else
+			info ( jointObjA.x, jointObjA.y, "Same objects selected!", jointObjA.parent )
+			jointObjB = nil
+		end
+	else
+		print ( "Couldnt create anything" )
+	end
+end
+
+function sliderListener ( event )
+	local id = event.target.id
+	local val = event.value*4 - 200
+	
+	ui["sliderText"..id].text = ui["sliderText"..id].par .. " " .. val
+	sliderVal[id] = val
+	
+	if metod == "joint" and jointObjA and jointObjB and jointLine then
+		display.remove ( jointLine )
+		jointLine = display.newLine ( panGroup, jointObjA.x + sliderVal[1], jointObjA.y + sliderVal[2], jointObjB.x + sliderVal[3], jointObjB.y + sliderVal[4] )
+		jointLine.strokeWidth = 4
 	end
 end
 
@@ -293,7 +324,7 @@ function scene:create( event )
 			mainTable.objects[i] = nil
 		end
 		mainTable = nil
-		mainTable = loader.load ( panGroup, touchListener, filename..".json" )
+		mainTable = loader.load ( panGroup, touchListener, filename..".json", display.contentCenterX, display.contentCenterY )
 	end
 	
 	ui.save = widget.newButton( {
@@ -400,19 +431,11 @@ function scene:create( event )
 	end
 	
 	counter = nil
-
+	
 	--=================================
 	--CREATE SLIDERS
 	--=================================	
 
-	function sliderValue ( event )
-		local id = event.target.id
-		local val = event.value*4 - 200
-		
-		ui["sliderText"..id].text = ui["sliderText"..id].par .. " " .. val
-		sliderVal[id] = val
-	end
-	
 	for i = 1, 4 do
 		local startX, gapX, Y = 10, 220, 40
 		local W = 200
@@ -423,7 +446,7 @@ function scene:create( event )
 			width = W,
 			value = 50,
 			id = i,
-			listener = sliderValue,
+			listener = sliderListener,
 		})
 		
 		ui["sliderText"..i] = display.newText ({
@@ -435,13 +458,36 @@ function scene:create( event )
 		ui["sliderText"..i].par = " - - "
 	end
 	
+	ui["createButton"] = widget.newButton({
+		onPress = createButtonAction,
+		x = util.border.right - 460,
+		y = util.border.up + 100,
+		shape = "roundedRect",
+		width = 100,
+		height = 50,
+		cornerRadius = 2,
+		fillColor = { default={1,0,0,1}, over={1,0.1,0.7,0.4} },
+		strokeColor = { default={1,0.4,0,1}, over={0.8,0.8,1,1} },
+		strokeWidth = 4,
+		label = "createJoint",
+	}
+	)
+	
 	function ui:setSliders ( params )
 		for a = 1, 4 do
 			sliderVal[a] = 0
-			ui["slider"..a]:setValue ( 50 )
-			ui["sliderText"..a].par = params[a] and params[a] or " - - "
-			ui["sliderText"..a].text = ui["sliderText"..a].par .. " " .. sliderVal[a]
+			self["slider"..a]:setValue ( 50 )
+			self["sliderText"..a].par = params[a] and params[a] or " - - "
+			self["sliderText"..a].text = self["sliderText"..a].par .. " " .. sliderVal[a]
 		end
+	end
+	
+	function ui:showSliders ( yesno )
+		for a = 1, 4 do
+			self["slider"..a].isVisible = yesno
+			self["sliderText"..a].isVisible = yesno
+		end
+		ui["createButton"].isVisible = yesno
 	end
 	
 	--===========================

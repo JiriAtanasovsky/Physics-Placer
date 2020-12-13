@@ -123,6 +123,22 @@ function M.physicsData(scale)
                     
 		}
 		
+		, 
+		["polygon3"] = {
+                    
+                    
+                    
+                    
+                    {
+                    pe_fixture_id = "", density = 2, friction = 0, bounce = 0, 
+                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
+                    shape = {   15, -2  ,  15, 3  ,  -15, 3  ,  -15, -2  }
+                    }
+                    
+                    
+                    
+		}
+		
 	} }
 
         -- apply scale factor
