@@ -17,6 +17,7 @@ local isPhysicsPaused
 local physicsDrawMode = "hybrid"
 
 local saver = require "saver"
+local centerLeftOnSave = false
 local loader = require "loader"
 
 local metod = "create"
@@ -314,7 +315,7 @@ function scene:create( event )
 		text = "PAUSED " .. physicsDrawMode,
 	})
 	
-	local function saveWrap () saver.save ( mainTable, filename..".json" ) end
+	local function saveWrap () saver.save ( mainTable, filename..".json", centerLeftOnSave ) end
 	
 	ui.save = widget.newButton( {
 		onPress = saveWrap,
@@ -329,6 +330,23 @@ function scene:create( event )
 		strokeWidth = 4,
 		label = "Save",
 	})
+	
+	local function savecheckboxAction ( event ) centerLeftOnSave = event.target.isOn end
+	
+	ui.savecheckbox = widget.newSwitch( {
+		x = util.border.right - 170,
+		y = util.border.up + 60,
+        style = "checkbox",
+        id = "Checkbox",
+        onPress = savecheckboxAction
+    })
+	
+	ui.savecheckboxText = display.newText ({
+		x = util.border.right - 170,
+		y = util.border.up + 80,
+		text = "Center left",
+	})
+	
 	
 	local function loadWrap ()
 		-- for i = #mainTable.objects, 1, -1 do
@@ -555,6 +573,8 @@ function scene:destroy( event )
 	mainTable = nil
 	objects = nil
 	metod = "drag"
+	
+	centerLeftOnSave = false
 	
 	selectedObject, selectedJoint = nil, nil
 	jointObjA, jointObjB, jointLine = nil, nil, nil

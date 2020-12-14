@@ -2,7 +2,7 @@ local util = require "util"
 
 local saver = {}
 
-function saver.save( mainTable, filename )
+function saver.save( mainTable, filename, centerLeft )
 	local saveTab = {}
 	saveTab.objects = {}
 	saveTab.spawn = {}
@@ -83,7 +83,7 @@ function saver.save( mainTable, filename )
 	
 	for i = 1, #saveTab.objects do
 		local object = saveTab.objects[i]
-		object.x = object.x - minXBound
+		object.x = centerLeft and (object.x - minXBound) or (object.x - minXBound - totalWidth/2)
 		object.y = object.y - minYBound - totalHeight
 	end
 	
