@@ -90,6 +90,18 @@ function saver.save( mainTable, filename, centerLeft )
 	saveTab.totalWidth = totalWidth
 	saveTab.totalHeight = totalHeight
 	
+	for i = 1, #mainTable.spawn do
+		local spawnPoint = mainTable.spawn[i]
+		print ( spawnPoint.x, spawnPoint.y, spawnPoint.spawnType)
+		saveTab.spawn[#saveTab.spawn+1] = {
+			spawnType = spawnPoint.spawnType,
+			x = centerLeft and (spawnPoint.x - minXBound) or (spawnPoint.x - minXBound - totalWidth/2),
+			y = spawnPoint.y - minYBound - totalHeight,
+			}
+	end
+	
+	if #saveTab.spawn == 0 then saveTab.spawn = nil end
+	
 	--save as json
 	util.saveFile ( saveTab, filename )
 end

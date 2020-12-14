@@ -6,9 +6,10 @@ local physics = require "physics"
 function loader.load ( group, touchListener, filename, offsetX, offsetY )
 	local mainTable = {}
 	mainTable.objects = {}
+	mainTable.spawn = {}
 	
 	local parameters = util.loadFile ( filename )
-	
+	local spawnPar = parameters.spawn or {}
 	local objectsPar = parameters.objects
 	local objects = require ( "missions." .. filename:sub ( 1, -6 ) ).physicsData(1) --loose json extention
 	
@@ -43,7 +44,8 @@ function loader.load ( group, touchListener, filename, offsetX, offsetY )
 		mainTable.objects[par.id] = img
 	end
 	
-	for objAid, img in pairs ( mainTable.objects ) do
+	for a = 1, #mainTable.objects do
+		local img = mainTable.objects[a]
 		for i = 1, #img.jointsParams do
 			local par = img.jointsParams[i]
 			
@@ -55,6 +57,25 @@ function loader.load ( group, touchListener, filename, offsetX, offsetY )
 				newJoint = physics.newJoint ( jointType, jointObjA, jointObjB, jointObjA.x + A, jointObjA.y + B, 0,0 )
 			end
 		end
+	end
+	
+	for i = 1, #spawnPar do
+		local X,Y,whatSpawn = spawnPar[i].x, spawnPar[i].y, spawnPar[i].spawnType
+		
+		local newSpawn = display.newText( {
+			parent = group,
+			x = X + ( offsetX or 0 ),
+			y = Y + ( offsetY or 0 ),
+			text = whatSpawn,
+			})
+		newSpawn.spawnType = whatSpawn
+		newSpawn:setFillColor ( 1,0,0,1 )
+		newSpawn.name = "spawn"..whatSpawn
+		
+		-- newSpawn.touch = touchListener
+		-- newSpawn:addEventListener ( "touch", newSpawn.touch )
+		
+		mainTable.spawn[#mainTable.spawn+1] = newSpawn
 	end
 	
 	-- util.printTable ( mainTable )

@@ -31,6 +31,9 @@ local jointTypes = {
 	rope = { "offsetA_x", "offsetA_y", "offsetB_x", "offsetB_y" },
 	}
 	
+local spawnTypes = { "player", "enemy" }
+local whatSpawn = "player"
+	
 local sliderVal = { 0,0,0,0 }
 
 local ui, uiGroup
@@ -236,6 +239,24 @@ local function runtimeTouchListener ( event )
 				img.id = #mainTable.objects
 			end
 		end
+	elseif metod == "spawn" then
+		if event.phase == "ended" then
+			local X, Y = panGroup:contentToLocal ( event.x, event.y )
+			local newSpawn = display.newText( {
+				parent = panGroup,
+				x = math.round ( X ),
+				y = math.round ( Y ),
+				text = whatSpawn,
+				})
+			newSpawn.name = "spawn"..whatSpawn
+			newSpawn.spawnType = whatSpawn
+			newSpawn:setFillColor ( 1,0,0,1 )
+			
+			-- newSpawn.touch = touchListener
+			-- newSpawn:addEventListener ( "touch", newSpawn.touch )
+			
+			mainTable.spawn[#mainTable.spawn+1] = newSpawn
+		end
 	else
 	
 	end
@@ -266,6 +287,12 @@ function createButtonAction ()
 	else
 		print ( "Couldnt create anything" )
 	end
+end
+
+function spawnButtonAction ( event )
+	local what = event.target:getLabel ()
+	whatSpawn = what
+	setMetod ( "spawn" )
 end
 
 function sliderListener ( event )
@@ -354,6 +381,12 @@ function scene:create( event )
 			display.remove ( v )
 			mainTable.objects[i] = nil
 		end
+		
+		for i = 1, #mainTable.spawn do
+			display.remove ( mainTable.spawn[i] )
+			mainTable.spawn[i] = nil
+		end
+		
 		mainTable = nil
 		mainTable = loader.load ( panGroup, touchListener, filename..".json", display.contentCenterX, display.contentCenterY )
 	end
@@ -514,8 +547,30 @@ function scene:create( event )
 		ui["createButton"].isVisible = yesno
 	end
 	
-	--===========================
-	--===========================
+	--=================================
+	--CREATE SPAWN POINTs BUTTONS
+	--=================================	
+	
+	for i = 1, #spawnTypes do
+		local what = spawnTypes[i]
+		ui[what.."spawnButton"] = widget.newButton({
+		onPress = spawnButtonAction,
+		x = util.border.left + 60*i,
+		y = util.border.down - 60,
+		shape = "roundedRect",
+		width = 50,
+		height = 50,
+		cornerRadius = 2,
+		fillColor = { default={1,0,0,1}, over={1,0.1,0.7,0.4} },
+		strokeColor = { default={1,0.4,0,1}, over={0.8,0.8,1,1} },
+		strokeWidth = 4,
+		label = what,
+		}
+		)
+	end
+	
+	--=================================
+	--=================================
 	
 	for k,v in pairs ( ui ) do
 		if type ( v ) == "table" then
@@ -581,7 +636,7 @@ function scene:destroy( event )
 	
 	Runtime:removeEventListener( "key", keyListener )
 	Runtime:removeEventListener( "touch", runtimeTouchListener )
-		
+
 	physics.stop ()
 end
 
