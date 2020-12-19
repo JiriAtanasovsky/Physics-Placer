@@ -1,3 +1,7 @@
+-----------------------------------------------------------------------------------------
+--This is saver module.
+--@module saver
+
 local util = require "util"
 
 local saver = {}

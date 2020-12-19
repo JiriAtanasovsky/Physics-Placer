@@ -1,3 +1,7 @@
+-----------------------------------------------------------------------------------------
+--This is utilities module.
+--@module utilities
+
 local util = {}
 
 math_sqrt = math.sqrt

@@ -1,10 +1,8 @@
 -----------------------------------------------------------------------------------------
---
--- editor.lua
---
------------------------------------------------------------------------------------------
+--This is main editor module.
+--@module editor
 
-local filename = "mission01"
+local filename = "m4a1"
 local objects = require ( "missions." .. filename ).physicsData(1)
 
 local composer = require( "composer" )
@@ -41,8 +39,16 @@ local panGroup
 
 local mainTable
 
+--- Displays info text that transits up and disapears
+-- Some description, can be over several lines.
+-- @param X first parameter
+-- @param Y second parameter
+-- @param text second parameter
+-- @param group second parameter
+-- @return nothing
+-- @see second_fun
 function info ( X, Y, text, group )
---displays info text that transits up and disapears
+
 	local infotext = display.newText ( {
 		text = text,
 		x = X,
@@ -311,6 +317,9 @@ end
 
 function scene:create( event )
 	local sceneGroup = self.view
+	
+	local background = display.newRect ( sceneGroup, display.contentCenterX, display.contentCenterY, 2000, 1200 )
+	background:setFillColor ( 0.5,0.5,0.5 )
 	
 	mainTable = {}
 	mainTable.objects = {}

@@ -1,7 +1,8 @@
---
+-----------------------------------------------------------------------------------------
+--This is config of project.
 -- For more information on config.lua see the Project Configuration Guide at:
 -- https://docs.coronalabs.com/guide/basics/configSettings
---
+--@module config
 
 application =
 {

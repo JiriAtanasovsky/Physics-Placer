@@ -1,3 +1,7 @@
+-----------------------------------------------------------------------------------------
+--This is loader module.
+--@module loader
+
 local loader = {}
 
 local util = require "util"
