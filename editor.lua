@@ -22,11 +22,13 @@ local metod = "create"
 local selectedObject, selectedJoint
 local jointObjA, jointObjB, jointLine
 
+---Table of supported types of joints with their parameters in indexed subtable.
+--@table jointTypes
 local jointTypes = { 
-	weld = { "anchor_x", "anchor_y", },
-	pivot = { "anchor_x", "anchor_y", },
-	friction = { "anchor_x", "anchor_y", },
-	rope = { "offsetA_x", "offsetA_y", "offsetB_x", "offsetB_y" },
+	weld = { "anchor_x", "anchor_y", }, --weld joint "anchor_x", "anchor_y" ( content coords)
+	pivot = { "anchor_x", "anchor_y", }, --pivot joint "anchor_x", "anchor_y" ( content coords)
+	friction = { "anchor_x", "anchor_y", }, --friction joint "anchor_x", "anchor_y" ( content coords)
+	rope = { "offsetA_x", "offsetA_y", "offsetB_x", "offsetB_y" }, --rope joint "offsetA_x", "offsetA_y", "offsetB_x", "offsetB_y" ( local coords)
 	}
 	
 local spawnTypes = { "player", "enemy" }
