@@ -102,6 +102,8 @@ local function keyListener ( event )
 			setMetod ( "joint" )
 		elseif key == "b" then
 			setMetod ( "bodyType" )
+		elseif key == "n" then
+			setMetod ( "noPhysicsBody" )
 		elseif key == "o" then
 			physicsDrawMode = physicsDrawMode == "hybrid" and "normal" or "hybrid"
 			ui.physicsText.text = ( isPhysicsPaused and "PAUSED" or "RUNNING" ) .. " " .. physicsDrawMode
@@ -200,6 +202,10 @@ function touchListener ( event )
 			target.bodyType = target.bodyType == "dynamic" and "static" or "dynamic"
 			info ( event.x, event.y, target.bodyType, target.parent )
 		end
+	elseif metod == "noPhysicsBody" then
+		if phase == "began" and target then
+			physics.removeBody( target )
+		end
 	elseif metod == "pan" then
 		return false
 	end
@@ -237,12 +243,14 @@ local function runtimeTouchListener ( event )
 				
 				img.x, img.y = panGroup:contentToLocal ( math.round ( event.x ), math.round ( event.y ) )
 				img.name = selectedObject
-				img.joints = {}
-				img.jointsParams = {}
+				
+				if #objects.data[selectedObject] > 0 then --there are physics data
+					img.joints = {}
+					img.jointsParams = {}
+					physics.addBody( img, objects:get ( selectedObject ) )
+				end
 				img.touch = touchListener
 				img:addEventListener ( "touch", img.touch )
-				
-				physics.addBody( img, objects:get ( selectedObject ) )
 				mainTable.objects[#mainTable.objects+1] = img
 				img.id = #mainTable.objects
 			end

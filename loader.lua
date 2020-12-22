@@ -39,26 +39,31 @@ function loader.load ( group, touchListener, filename, offsetX, offsetY )
 		
 		img.name = par.name
 		img.id = par.id
+		
+		if #objects.data[par.name] > 0 then --if no PE data, only image
 		img.joints = {}
 		img.jointsParams = par.joints
 		
 		physics.addBody( img, objects:get ( par.name ) )
 		img.bodyType = par.bodyType
+		end
 		
 		mainTable.objects[par.id] = img
 	end
 	
 	for a = 1, #mainTable.objects do
 		local img = mainTable.objects[a]
-		for i = 1, #img.jointsParams do
-			local par = img.jointsParams[i]
-			
-			local jointType, jointObjA, jointObjB, A, B, C, D = par.jointType, img, mainTable.objects[par.objBId], par.slider1,par.slider2,par.slider3,par.slider4
+		if img.bodyType then --check if is in physics
+			for i = 1, #img.jointsParams do
+				local par = img.jointsParams[i]
+				
+				local jointType, jointObjA, jointObjB, A, B, C, D = par.jointType, img, mainTable.objects[par.objBId], par.slider1,par.slider2,par.slider3,par.slider4
 
-			if jointType == "rope" then
-				newJoint = physics.newJoint ( jointType, jointObjA, jointObjB, A, B, C, D )
-			else
-				newJoint = physics.newJoint ( jointType, jointObjA, jointObjB, jointObjA.x + A, jointObjA.y + B, 0,0 )
+				if jointType == "rope" then
+					newJoint = physics.newJoint ( jointType, jointObjA, jointObjB, A, B, C, D )
+				else
+					newJoint = physics.newJoint ( jointType, jointObjA, jointObjB, jointObjA.x + A, jointObjA.y + B, 0,0 )
+				end
 			end
 		end
 	end

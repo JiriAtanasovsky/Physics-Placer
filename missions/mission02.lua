@@ -25,21 +25,20 @@ function M.physicsData(scale)
 		}
 		
 		, 
+		["cliff"] = {
+                    
+		}
+		
+		, 
 		["hedgehog"] = {
                     
                     
                     
                     
                     {
-                    pe_fixture_id = "hedgehog", density = 2, friction = 500, bounce = 0.5, 
+                    pe_fixture_id = "hedgehog", density = 2, friction = 1000, bounce = 0.5, 
                     filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   -147.5, 80  ,  119.5, -122  ,  147.5, -70  ,  -117.5, 125  ,  -147.5, 125  }
-                    }
-                     ,
-                    {
-                    pe_fixture_id = "hedgehog", density = 2, friction = 500, bounce = 0.5, 
-                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   147.5, -70  ,  119.5, -122  ,  147.5, -108  }
+                    shape = {   -36, -38  ,  42, 22  ,  46, 39  ,  37, 39  ,  -45, -23  ,  -45, -34  }
                     }
                     
                     
@@ -48,15 +47,15 @@ function M.physicsData(scale)
                     
                     
                     {
-                    pe_fixture_id = "hedgehog", density = 2, friction = 500, bounce = 0.5, 
+                    pe_fixture_id = "hedgehog", density = 2, friction = 1000, bounce = 0.5, 
                     filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   117.5, 125  ,  -147.5, -74  ,  -114.5, -124  ,  147.5, 80  ,  147.5, 125  }
+                    shape = {   -45, 24  ,  36, -38  ,  46, -22  ,  -37, 39  ,  -45, 39  }
                     }
                      ,
                     {
-                    pe_fixture_id = "hedgehog", density = 2, friction = 500, bounce = 0.5, 
+                    pe_fixture_id = "hedgehog", density = 2, friction = 1000, bounce = 0.5, 
                     filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   -114.5, -124  ,  -147.5, -74  ,  -147.5, -109  }
+                    shape = {   46, -22  ,  36, -38  ,  45, -34  }
                     }
                     
                     
@@ -70,55 +69,9 @@ function M.physicsData(scale)
                     
                     
                     {
-                    pe_fixture_id = "terrain-beach", density = 2, friction = 50, bounce = 0.5, 
-                    filter = { categoryBits = 32768, maskBits = 65535, groupIndex = 0 },
-                    shape = {   -1614.5, -124  ,  -2500.5, 181  ,  -2501.5, -181  }
-                    }
-                     ,
-                    {
-                    pe_fixture_id = "terrain-beach", density = 2, friction = 50, bounce = 0.5, 
-                    filter = { categoryBits = 32768, maskBits = 65535, groupIndex = 0 },
-                    shape = {   -236.5, -54  ,  2499.5, 181  ,  -2500.5, 181  ,  -1614.5, -124  }
-                    }
-                     ,
-                    {
-                    pe_fixture_id = "terrain-beach", density = 2, friction = 50, bounce = 0.5, 
-                    filter = { categoryBits = 32768, maskBits = 65535, groupIndex = 0 },
-                    shape = {   2499.5, 181  ,  -236.5, -54  ,  2499.5, 61  }
-                    }
-                    
-                    
-                    
-		}
-		
-		, 
-		["cliff"] = {
-                    
-                    
-                    
-                    
-                    {
-                    pe_fixture_id = "cliff", density = 2, friction = 50, bounce = 0.2, 
-                    filter = { categoryBits = 32768, maskBits = 65535, groupIndex = 0 },
-                    shape = {   180, -243.5  ,  198, -177.5  ,  188, -168.5  ,  -332, -4.5  ,  -333, -238.5  }
-                    }
-                     ,
-                    {
-                    pe_fixture_id = "cliff", density = 2, friction = 50, bounce = 0.2, 
-                    filter = { categoryBits = 32768, maskBits = 65535, groupIndex = 0 },
-                    shape = {   266, -87.5  ,  293, -22.5  ,  296, 39.5  ,  -332, -4.5  ,  204, -135.5  ,  232, -130.5  }
-                    }
-                     ,
-                    {
-                    pe_fixture_id = "cliff", density = 2, friction = 50, bounce = 0.2, 
-                    filter = { categoryBits = 32768, maskBits = 65535, groupIndex = 0 },
-                    shape = {   198, -177.5  ,  180, -243.5  ,  195, -227.5  }
-                    }
-                     ,
-                    {
-                    pe_fixture_id = "cliff", density = 2, friction = 50, bounce = 0.2, 
-                    filter = { categoryBits = 32768, maskBits = 65535, groupIndex = 0 },
-                    shape = {   -332, -4.5  ,  188, -168.5  ,  204, -135.5  }
+                    pe_fixture_id = "096-091-041-beach", density = 2, friction = 20, bounce = 0.1, 
+                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
+                    shape = {   2654.5, 65  ,  2654.5, 184  ,  -2650.5, 184  ,  -2650.5, -182  }
                     }
                     
                     
@@ -132,27 +85,9 @@ function M.physicsData(scale)
                     
                     
                     {
-                    pe_fixture_id = "sandbag", density = 2, friction = 250, bounce = 0.1, 
+                    pe_fixture_id = "sandbag", density = 2, friction = 300, bounce = 0.1, 
                     filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   -20, -43.5  ,  20, -43.5  ,  50, -9.5  ,  46, 31.5  ,  -30, 43.5  ,  -50, 25.5  ,  -50, -12.5  ,  -41, -34.5  }
-                    }
-                     ,
-                    {
-                    pe_fixture_id = "sandbag", density = 2, friction = 250, bounce = 0.1, 
-                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   50, -9.5  ,  20, -43.5  ,  38, -36.5  }
-                    }
-                     ,
-                    {
-                    pe_fixture_id = "sandbag", density = 2, friction = 250, bounce = 0.1, 
-                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   -50, 25.5  ,  -30, 43.5  ,  -42, 38.5  }
-                    }
-                     ,
-                    {
-                    pe_fixture_id = "sandbag", density = 2, friction = 250, bounce = 0.1, 
-                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   -30, 43.5  ,  46, 31.5  ,  33, 43.5  }
+                    shape = {   14.5, -4.5  ,  14.5, 6.5  ,  11.5, 12.5  ,  -11.5, 12.5  ,  -15.5, 8.5  ,  -15.5, -5.5  ,  -10.5, -13.5  ,  9.5, -13.5  }
                     }
                     
                     
@@ -166,27 +101,9 @@ function M.physicsData(scale)
                     
                     
                     {
-                    pe_fixture_id = "sandbag", density = 2, friction = 250, bounce = 0.1, 
+                    pe_fixture_id = "sandbag", density = 2, friction = 300, bounce = 0.1, 
                     filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   37.5, 43  ,  -32.5, 44  ,  -48.5, -6  ,  -41.5, -36  ,  16.5, -43  ,  45.5, -11  ,  48.5, 17  ,  47.5, 37  }
-                    }
-                     ,
-                    {
-                    pe_fixture_id = "sandbag", density = 2, friction = 250, bounce = 0.1, 
-                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   -48.5, 31  ,  -48.5, -6  ,  -32.5, 44  ,  -41.5, 41  }
-                    }
-                     ,
-                    {
-                    pe_fixture_id = "sandbag", density = 2, friction = 250, bounce = 0.1, 
-                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   45.5, -11  ,  16.5, -43  ,  34.5, -32  }
-                    }
-                     ,
-                    {
-                    pe_fixture_id = "sandbag", density = 2, friction = 250, bounce = 0.1, 
-                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   -41.5, -36  ,  -28.5, -44  ,  16.5, -43  }
+                    shape = {   15.5, -4  ,  15.5, 7  ,  12.5, 13  ,  -10.5, 13  ,  -14.5, 9  ,  -14.5, -5  ,  -9.5, -13  ,  10.5, -13  }
                     }
                     
                     
@@ -200,21 +117,37 @@ function M.physicsData(scale)
                     
                     
                     {
-                    pe_fixture_id = "sandbag", density = 2, friction = 250, bounce = 0.1, 
+                    pe_fixture_id = "sandbag", density = 2, friction = 300, bounce = 0.1, 
                     filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   43, -24.5  ,  49, -0.5  ,  -26, 41.5  ,  -50, -11.5  ,  -44, -32.5  ,  -33, -41.5  ,  22, -40.5  ,  36, -36.5  }
+                    shape = {   15, -4  ,  15, 7  ,  12, 13  ,  -11, 13  ,  -15, 9  ,  -15, -5  ,  -10, -13  ,  10, -13  }
+                    }
+                    
+                    
+                    
+		}
+		
+		, 
+		["polygon-cliff"] = {
+                    
+                    
+                    
+                    
+                    {
+                    pe_fixture_id = "054-068-018-cliff", density = 2, friction = 150, bounce = 0.5, 
+                    filter = { categoryBits = 32768, maskBits = 65535, groupIndex = 0 },
+                    shape = {   416, -97.5  ,  440, -51.5  ,  -488, -52.5  ,  357, -137.5  ,  391, -127.5  }
                     }
                      ,
                     {
-                    pe_fixture_id = "sandbag", density = 2, friction = 250, bounce = 0.1, 
-                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   36, 41.5  ,  -26, 41.5  ,  49, -0.5  ,  50, 33.5  }
+                    pe_fixture_id = "054-068-018-cliff", density = 2, friction = 150, bounce = 0.5, 
+                    filter = { categoryBits = 32768, maskBits = 65535, groupIndex = 0 },
+                    shape = {   351, -175.5  ,  340, -171.5  ,  -488, -52.5  ,  -487, -237.5  ,  336, -241.5  ,  351, -223.5  }
                     }
                      ,
                     {
-                    pe_fixture_id = "sandbag", density = 2, friction = 250, bounce = 0.1, 
-                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   -51, 27.5  ,  -50, -11.5  ,  -26, 41.5  ,  -47, 36.5  }
+                    pe_fixture_id = "054-068-018-cliff", density = 2, friction = 150, bounce = 0.5, 
+                    filter = { categoryBits = 32768, maskBits = 65535, groupIndex = 0 },
+                    shape = {   -488, -52.5  ,  340, -171.5  ,  357, -137.5  }
                     }
                     
                     
