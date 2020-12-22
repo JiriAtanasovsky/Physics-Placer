@@ -10,10 +10,10 @@ local physics = require "physics"
 function loader.load ( group, touchListener, filename, offsetX, offsetY )
 	local mainTable = {}
 	mainTable.objects = {}
-	mainTable.spawn = {}
+	mainTable.points = {}
 	
 	local parameters = util.loadFile ( filename )
-	local spawnPar = parameters.spawn or {}
+	local pointsPar = parameters.points or {}
 	local objectsPar = parameters.objects
 	local objects = require ( "missions." .. filename:sub ( 1, -6 ) ).physicsData(1) --loose json extention
 	
@@ -63,23 +63,24 @@ function loader.load ( group, touchListener, filename, offsetX, offsetY )
 		end
 	end
 	
-	for i = 1, #spawnPar do
-		local X,Y,whatSpawn = spawnPar[i].x, spawnPar[i].y, spawnPar[i].spawnType
+	for i = 1, #pointsPar do
+		local X,Y,type,name = pointsPar[i].x, pointsPar[i].y, pointsPar[i].type, pointsPar[i].name
 		
-		local newSpawn = display.newText( {
-			parent = group,
-			x = X + ( offsetX or 0 ),
-			y = Y + ( offsetY or 0 ),
-			text = whatSpawn,
-			})
-		newSpawn.spawnType = whatSpawn
-		newSpawn:setFillColor ( 1,0,0,1 )
-		newSpawn.name = "spawn"..whatSpawn
+		local newPoint = display.newText( {
+				parent = group,
+				x = X + ( offsetX or 0 ),
+				y = Y + ( offsetY or 0 ),
+				text = name ..":".. type,
+				})
 		
-		-- newSpawn.touch = touchListener
-		-- newSpawn:addEventListener ( "touch", newSpawn.touch )
+			newPoint.name = name
+			newPoint.type = type
+			newPoint:setFillColor ( 1,0,0,1 )
 		
-		mainTable.spawn[#mainTable.spawn+1] = newSpawn
+		-- newPoint.touch = touchListener
+		-- newPoint:addEventListener ( "touch", newPoint.touch )
+		
+		mainTable.points[#mainTable.points+1] = newPoint
 	end
 	
 	-- util.printTable ( mainTable )

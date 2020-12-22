@@ -48,55 +48,6 @@ function M.physicsData(scale)
 		}
 		
 		, 
-		["body"] = {
-                    
-                    
-                    
-                    
-                    {
-                    pe_fixture_id = "0800-armor-1400", density = 2, friction = 100, bounce = 0.5, 
-                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   -102, 29  ,  -227, 38  ,  -235, 23  ,  -224, 0  ,  -103, -76  }
-                    }
-                    
-                    
-                    
-                     ,
-                    
-                    
-                    {
-                    pe_fixture_id = "0500-engine-0800", density = 2, friction = 100, bounce = 0.5, 
-                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   175, -62  ,  223, -51  ,  234, -30  ,  225, -7  ,  174, 37  ,  95, 29  ,  95, -72  }
-                    }
-                    
-                    
-                    
-                     ,
-                    
-                    
-                    {
-                    pe_fixture_id = "0500-body-0800", density = 2, friction = 100, bounce = 0.5, 
-                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   95, -72  ,  94, 29  ,  -102, 29  ,  -102, -76  }
-                    }
-                    
-                    
-                    
-                     ,
-                    
-                    
-                    {
-                    pe_fixture_id = "0400-belly-0800", density = 2, friction = 100, bounce = 0.5, 
-                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   175, 37  ,  -225, 39  ,  -101, 29  ,  95, 28  }
-                    }
-                    
-                    
-                    
-		}
-		
-		, 
 		["reference"] = {
                     
 		}
@@ -141,8 +92,8 @@ function M.physicsData(scale)
                     
                     {
                     pe_fixture_id = "wheel", density = 2, friction = 100, bounce = 0, 
-                    filter = { categoryBits = 8192, maskBits = 65535, groupIndex = 0 },
-                    radius = 20.000
+                    filter = { categoryBits = 8192, maskBits = 57343, groupIndex = 0 },
+                    radius = 25.942
                     }
                     
                     
@@ -155,8 +106,8 @@ function M.physicsData(scale)
                     
                     {
                     pe_fixture_id = "wheel_back", density = 2, friction = 100, bounce = 0.1, 
-                    filter = { categoryBits = 8192, maskBits = 65535, groupIndex = 0 },
-                    radius = 20.000
+                    filter = { categoryBits = 8192, maskBits = 57343, groupIndex = 0 },
+                    radius = 25.255
                     }
                     
                     
@@ -169,9 +120,58 @@ function M.physicsData(scale)
                     
                     {
                     pe_fixture_id = "wheel_front", density = 2, friction = 100, bounce = 0.1, 
-                    filter = { categoryBits = 8192, maskBits = 65535, groupIndex = 0 },
-                    radius = 26.793
+                    filter = { categoryBits = 8192, maskBits = 57343, groupIndex = 0 },
+                    radius = 31.200
                     }
+                    
+                    
+		}
+		
+		, 
+		["body"] = {
+                    
+                    
+                    
+                    
+                    {
+                    pe_fixture_id = "0600-armor-1200", density = 2, friction = 100, bounce = 0.5, 
+                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
+                    shape = {   -217.5, 48.5  ,  -228.5, 18.5  ,  -102.5, -64.5  ,  -66.5, -64.5  ,  -66.5, 33.5  }
+                    }
+                    
+                    
+                    
+                     ,
+                    
+                    
+                    {
+                    pe_fixture_id = "0600-engine-0900", density = 2, friction = 100, bounce = 0.5, 
+                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
+                    shape = {   219.5, -39.5  ,  229.5, -19.5  ,  223.5, 2.5  ,  170.5, 45.5  ,  93.5, 31.5  ,  92.5, -59.5  }
+                    }
+                    
+                    
+                    
+                     ,
+                    
+                    
+                    {
+                    pe_fixture_id = "0600-body-1000", density = 2, friction = 100, bounce = 0.5, 
+                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
+                    shape = {   92.5, -60.5  ,  92.5, 31.5  ,  -66.5, 33.5  ,  -66.5, -64.5  }
+                    }
+                    
+                    
+                    
+                     ,
+                    
+                    
+                    {
+                    pe_fixture_id = "0400-belly-0800", density = 2, friction = 100, bounce = 0.5, 
+                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
+                    shape = {   170.5, 46.5  ,  -216.5, 48.5  ,  -66.5, 32.5  ,  92.5, 30.5  }
+                    }
+                    
                     
                     
 		}

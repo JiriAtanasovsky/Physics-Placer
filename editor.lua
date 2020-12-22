@@ -2,7 +2,7 @@
 --This is main editor module.
 --@module editor
 
-local filename = "m4a1"
+local filename = "mission02"
 local objects = require ( "missions." .. filename ).physicsData(1)
 
 local composer = require( "composer" )
@@ -31,8 +31,8 @@ local jointTypes = {
 	rope = { "offsetA_x", "offsetA_y", "offsetB_x", "offsetB_y" }, --rope joint "offsetA_x", "offsetA_y", "offsetB_x", "offsetB_y" ( local coords)
 	}
 	
-local spawnTypes = { "player", "enemy" }
-local whatSpawn = "player"
+local pointTypes = { player = "spawn", enemy = "spawn", cover = "cover", fireBurning10 = "emitter" }
+local whatPoint = "player"
 	
 local sliderVal = { 0,0,0,0 }
 
@@ -247,23 +247,19 @@ local function runtimeTouchListener ( event )
 				img.id = #mainTable.objects
 			end
 		end
-	elseif metod == "spawn" then
+	elseif metod == "point" then
 		if event.phase == "ended" then
 			local X, Y = panGroup:contentToLocal ( event.x, event.y )
-			local newSpawn = display.newText( {
+			local newPoint = display.newText( {
 				parent = panGroup,
 				x = math.round ( X ),
 				y = math.round ( Y ),
-				text = whatSpawn,
+				text = whatPoint ..":".. pointTypes[whatPoint],
 				})
-			newSpawn.name = "spawn"..whatSpawn
-			newSpawn.spawnType = whatSpawn
-			newSpawn:setFillColor ( 1,0,0,1 )
-			
-			-- newSpawn.touch = touchListener
-			-- newSpawn:addEventListener ( "touch", newSpawn.touch )
-			
-			mainTable.spawn[#mainTable.spawn+1] = newSpawn
+			newPoint.name = whatPoint
+			newPoint.type = pointTypes[whatPoint]
+			newPoint:setFillColor ( 1,0,0,1 )
+			mainTable.points[#mainTable.points+1] = newPoint
 		end
 	else
 	
@@ -297,10 +293,10 @@ function createButtonAction ()
 	end
 end
 
-function spawnButtonAction ( event )
+function pointButtonAction ( event )
 	local what = event.target:getLabel ()
-	whatSpawn = what
-	setMetod ( "spawn" )
+	whatPoint = what
+	setMetod ( "point" )
 end
 
 function sliderListener ( event )
@@ -325,7 +321,7 @@ function scene:create( event )
 	
 	mainTable = {}
 	mainTable.objects = {}
-	mainTable.spawn = {} --spawn points
+	mainTable.points = {} --points of interest to be saved with the map.
 	
 	physics.start()
 	physics.setDrawMode ( physicsDrawMode )
@@ -393,9 +389,9 @@ function scene:create( event )
 			mainTable.objects[i] = nil
 		end
 		
-		for i = 1, #mainTable.spawn do
-			display.remove ( mainTable.spawn[i] )
-			mainTable.spawn[i] = nil
+		for i = 1, #mainTable.points do
+			display.remove ( mainTable.points[i] )
+			mainTable.points[i] = nil
 		end
 		
 		mainTable = nil
@@ -559,13 +555,12 @@ function scene:create( event )
 	end
 	
 	--=================================
-	--CREATE SPAWN POINTs BUTTONS
+	--CREATE POINTs BUTTONS
 	--=================================	
-	
-	for i = 1, #spawnTypes do
-		local what = spawnTypes[i]
-		ui[what.."spawnButton"] = widget.newButton({
-		onPress = spawnButtonAction,
+	local i = 1
+	for name, type in pairs ( pointTypes ) do
+		ui[name.."pointButton"] = widget.newButton({
+		onPress = pointButtonAction,
 		x = util.border.left + 60*i,
 		y = util.border.down - 60,
 		shape = "roundedRect",
@@ -575,9 +570,10 @@ function scene:create( event )
 		fillColor = { default={1,0,0,1}, over={1,0.1,0.7,0.4} },
 		strokeColor = { default={1,0.4,0,1}, over={0.8,0.8,1,1} },
 		strokeWidth = 4,
-		label = what,
+		label = name,
 		}
 		)
+		i = i + 1
 	end
 	
 	--=================================

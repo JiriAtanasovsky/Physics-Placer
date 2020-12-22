@@ -9,7 +9,7 @@ local saver = {}
 function saver.save( mainTable, filename, centerLeft )
 	local saveTab = {}
 	saveTab.objects = {}
-	saveTab.spawn = {}
+	saveTab.points = {}
 	
 	--put processed data into saveTab
 	local saveI = 1 --this is to prevent gaps in table in case obj = nil (deleted object)
@@ -94,17 +94,18 @@ function saver.save( mainTable, filename, centerLeft )
 	saveTab.totalWidth = totalWidth
 	saveTab.totalHeight = totalHeight
 	
-	for i = 1, #mainTable.spawn do
-		local spawnPoint = mainTable.spawn[i]
-		print ( spawnPoint.x, spawnPoint.y, spawnPoint.spawnType)
-		saveTab.spawn[#saveTab.spawn+1] = {
-			spawnType = spawnPoint.spawnType,
-			x = centerLeft and (spawnPoint.x - minXBound) or (spawnPoint.x - minXBound - totalWidth/2),
-			y = spawnPoint.y - minYBound - totalHeight,
+	for i = 1, #mainTable.points do
+		local point = mainTable.points[i]
+		print ( point.x, point.y, point.spawnType)
+		saveTab.points[#saveTab.points+1] = {
+			type = point.type,
+			name = point.name,
+			x = centerLeft and (point.x - minXBound) or (point.x - minXBound - totalWidth/2),
+			y = point.y - minYBound - totalHeight,
 			}
 	end
 	
-	if #saveTab.spawn == 0 then saveTab.spawn = nil end
+	if #saveTab.points == 0 then saveTab.points = nil end
 	
 	--save as json
 	util.saveFile ( saveTab, filename )
